@@ -1,0 +1,11 @@
+# This file contains the fastlane.tools configuration
+# The docs are available on https://docs.fastlane.tools/actions/match
+# For all available options run `fastlane match --help`
+#
+# Povio fastlane deployment configuration
+# version 1.0
+
+storage_mode("git")
+git_url("git@github.com:poviolabs/{TODO}-certs.git")
+type("development") # The default type, can be: appstore, adhoc, enterprise or development
+

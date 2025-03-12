@@ -1,0 +1,206 @@
+# This file contains the fastlane.tools configuration
+# You can find the documentation at https://docs.fastlane.tools
+# For a list of all available actions, check out https://docs.fastlane.tools/actions
+# For a list of all available plugins, check out https://docs.fastlane.tools/plugins/available-plugins     
+#
+# Povio fastlane deployment configuration
+# version 1.7.0
+
+default_platform(:ios)
+
+import("./actions/Utility")
+import("./actions/NotifyService/SlackNotifyService")
+import("./actions/UploadService/FirebaseUploadService")
+import("./actions/UploadService/TestFlightUploadService")
+import("./actions/UploadService/SentryUploadService")
+
+PROJECT_NAME  = ENV["PROJECT_NAME"]
+SCHEME_NAME   = ENV["SCHEME_NAME"]
+TARGET_NAME   = ENV["TARGET_NAME"]
+PROJECT_EXT   = ENV["PROJECT_EXT"]
+TAG_PREFIX    = ENV["TAG_PREFIX"] || ""
+BUNDLE_IDS    = ENV['BUNDLE_IDS']&.split(',') || []
+GROUPS        = ENV['GROUPS']&.split(',') || []
+HAS_PODS      = ENV["HAS_PODS"] == "true"
+TAG_VERSION_N = ENV["TAG_VERSION_N"] == "true"
+TAG_BUILD_N   = ENV["TAG_BUILD_N"] == "true"
+SPM_PACKAGES  = "SourcePackages"
+
+ENV["FASTLANE_XCODEBUILD_SETTINGS_TIMEOUT"] = "180"
+ENV["FASTLANE_XCODEBUILD_SETTINGS_RETRIES"] = "10"
+ENV["FASTLANE_XCODE_LIST_TIMEOUT"] = "180"
+
+platform :ios do
+  before_all do
+    setup_ci
+    decode_prod_xcconfig
+    app_store_connect_api_key(
+      issuer_id: ENV["APP_STORE_CONNECT_API_ISSUER_ID"],
+      key_id: ENV["APP_STORE_CONNECT_API_KEY_ID"],
+      key_content: ENV["APP_STORE_CONNECT_API_KEY_CONTENT"]
+    )
+  end
+
+  desc "Deploy a new build to Firebase"
+  lane :deploy_app do |options|
+    tag_name = options[:tagless] ? "unknown" : ENV["GIT_TAG_NAME"]
+    build(tag_name)
+    if ENV["SENTRY_UPLOAD"] == true
+      sentry_upload_dsyms()
+    end
+
+    if ENV["DISTRIBUTION_SERVICE"] == "firebase"
+      upload_build_firebase(tag_name: tag_name, groups: ENV['GROUPS'])
+    else
+      upload_build_testflight(tag_name: tag_name, groups: GROUPS)
+    end
+  end
+  
+  desc "Prepares build"
+  def build(tag_name)
+    if ENV["DISTRIBUTION_SERVICE"] == "firebase"
+      certificates_development
+      export_method = "development"
+    else 
+      certificates_appstore
+      export_method = "app-store"
+    end
+
+    if HAS_PODS
+      configure_cocoapods
+    end
+
+    setVersionNumber(tag_name)
+    setBuildNumber(BUNDLE_IDS.first(), tag_name)
+    
+    if (PROJECT_EXT == ".xcworkspace")
+      build_app(
+        workspace: "./#{PROJECT_NAME}.xcworkspace", 
+        scheme: "#{SCHEME_NAME}", 
+        export_method: export_method,
+        cloned_source_packages_path: SPM_PACKAGES
+      )
+    else
+      build_app(
+        project: "./#{PROJECT_NAME}.xcodeproj", 
+        scheme: "#{SCHEME_NAME}", 
+        export_method: export_method,
+        cloned_source_packages_path: SPM_PACKAGES
+      )
+    end
+  end
+  
+  desc "Runs the tests"
+  lane :test do |options|
+    run_tests(options.fetch(:device, 'iPhone 15 Pro'),
+              options.fetch(:version, '18.0'),
+              options.fetch(:unit, true),
+              options.fetch(:ui, true))
+  end
+
+  desc "Precheck the App's metadata on the App Store Connect"
+  lane :metadata_check do |options|
+    check_app_store_metadata(
+      app_identifier: BUNDLE_IDS.first(),
+      default_rule_level: options.fetch(:strict) ? "error" : "warn",
+      include_in_app_purchases: false
+    )
+  end
+  
+  lane :decode_prod_xcconfig do
+    # The encoded secret should be available in an environment variable
+    encoded_secret = ENV['PROD_XCCONFIG']
+
+    if encoded_secret.nil? || encoded_secret.empty?
+      UI.user_error!("PROD_XCCONFIG environment variable is not set or empty.")
+    end
+
+    # Navigate one level up and find the .xcodeproj file
+    base_dir = File.expand_path("../", Dir.pwd)
+    project_file = Dir.entries(base_dir).find { |entry| entry.end_with?(".xcodeproj") }
+
+    if project_file.nil?
+      UI.user_error!("No .xcodeproj file found in #{base_dir}. Ensure the project file exists.")
+    end
+
+    # Extract the project name from the .xcodeproj file
+    project_name = File.basename(project_file, ".xcodeproj")
+
+    # Construct the path: /../project_name/Resources/Configs/Prod.xcconfig
+    prod_xcconfig_path = File.join(base_dir, project_name, "Resources", "Configs", "Prod.xcconfig")
+    prod_xcconfig_dir = File.dirname(prod_xcconfig_path)
+
+    # Ensure the directory exists
+    FileUtils.mkdir_p(prod_xcconfig_dir)
+
+    # Decode the secret and write it to Prod.xcconfig
+    File.open(prod_xcconfig_path, 'w') do |file|
+      file.write(Base64.decode64(encoded_secret))
+    end
+
+    UI.success("Prod.xcconfig file has been successfully populated at #{prod_xcconfig_path}.")
+  end
+
+  desc "Lint the code"
+  lane :lint do
+    swiftlint(mode: :lint, strict: true)
+  end
+
+  desc "Cocoapods configuration"
+  lane :configure_cocoapods do
+    cocoapods(
+      clean_install: true,
+      podfile: "./"
+    )
+  end
+
+  desc "Refreshes provisioning profiles"
+  lane :refresh_profiles do
+    match(type: "appstore", force: true, app_identifier: BUNDLE_IDS)
+    match(type: "development", force: true, app_identifier: BUNDLE_IDS)
+  end
+
+  desc "Fetch certificates and provisioning profiles"
+  lane :certificates_appstore do
+    match(type: "appstore", readonly: true, force_for_new_devices: true, app_identifier: BUNDLE_IDS)
+  end
+
+  desc "Fetch certificates and provisioning profiles"
+  lane :certificates_development do
+    match(type: "development", readonly: true, force_for_new_devices: true, app_identifier: BUNDLE_IDS)
+  end
+  
+  desc "Run tests"
+  def run_tests(device, version, unit, ui)
+    options = { destination: "platform=iOS Simulator,name=#{device},OS=#{version}" }
+    if !unit
+      options[:skip_testing] = "#{PROJECT_NAME}Tests"
+    end
+    if !ui
+      options[:skip_testing] = "#{PROJECT_NAME}UITests"
+    end
+    options[:cloned_source_packages_path] = SPM_PACKAGES
+    scan options
+  end
+
+  desc "Registers a new Device to the Provisioning Profile"
+  lane :register_new_device do |options|
+    register_device(
+      name: options.fetch(:device_name),
+      udid: options.fetch(:device_udid)
+    )
+  end
+
+  def get_message_based_on_env
+    case ENV["MY_ENV_VARIABLE"]
+    when "development"
+      "Running in development mode"
+    when "production"
+      "Running in production mode"
+    when "test"
+      "Running in test mode"
+    else
+      "Environment variable not set or unrecognized"
+    end
+  end
+end

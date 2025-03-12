@@ -1,0 +1,208 @@
+# All rules are available at https://github.com/realm/SwiftLint/blob/master/Rules.md
+
+disabled_rules:
+  - trailing_whitespace # Xcode adds whitespaces for each new line
+  - todo
+  - nesting
+  - cyclomatic_complexity
+  - class_delegate_protocol
+  - non_optional_string_data_conversion
+  - trailing_newline
+
+opt_in_rules:
+  - array_init
+  - closure_spacing
+  - collection_alignment
+  - contains_over_first_not_nil
+  - contains_over_filter_count
+  - contains_over_filter_is_empty
+  - contains_over_range_nil_comparison
+  - convenience_type
+  - discouraged_optional_boolean
+  - discouraged_object_literal
+  - empty_count
+  - empty_string
+  - empty_collection_literal
+  - explicit_init
+  - fallthrough
+  - fatal_error_message
+  - first_where
+  - file_name
+  - flatmap_over_map_reduce
+  - for_where
+  - force_unwrapping
+  - implicitly_unwrapped_optional
+  - implicit_return
+  - identical_operands
+  - joined_default_parameter
+  - last_where
+  - legacy_random
+  - literal_expression_end_indentation
+  - legacy_multiple
+  - modifier_order
+  - nesting
+  - nimble_operator
+  - nslocalizedstring_key
+  - nslocalizedstring_require_bundle
+  - operator_usage_whitespace
+  - overridden_super_call
+  - pattern_matching_keywords
+  - prohibited_interface_builder
+  - prefixed_toplevel_constant
+  - prohibited_super_call
+  - private_action
+  - redundant_nil_coalescing
+  - required_enum_case
+  - reduce_into
+  - switch_case_on_newline
+  - strict_fileprivate
+  - sorted_first_last
+  - static_operator
+  - trailing_closure
+  - toggle_bool
+  - trailing_whitespace
+  - unavailable_function
+  - unneeded_parentheses_in_closure_argument
+  - unowned_variable_capture
+  - vertical_parameter_alignment_on_call
+  - vertical_whitespace_closing_braces
+  - vertical_whitespace_opening_braces
+  - yoda_condition
+  - closure_body_length
+
+excluded:
+  - Pods
+  - templateTests
+  - FileTemplates
+  - fastlane
+  - vendor
+  - Scripts
+  - .bundle
+  - .vendor
+  - Packages/Auth/Package.swift
+  - Packages/Networking/Package.swift
+  - Packages/Utils/Package.swift
+  - Packages/Domain/Package.swift
+  - Packages/PovioMacro/*
+  - Packages/OpenAPI/*
+
+large_tuple:
+  - 3 # warning
+  - 5 # error
+
+line_length:
+  - 190 # warning
+  - 200 # error
+
+function_body_length:
+  - 70 # warning
+  - 100 # error
+
+function_parameter_count:
+  - 7 # warning
+  - 10 # error
+
+type_body_length:
+  - 450 # warning
+  - 500 # error
+
+file_length:
+  - 450 # warning
+  - 500 # error
+
+closure_body_length:
+  warning: 40
+
+type_name:
+  max_length:
+    - 50 # error
+  excluded:
+    - T
+    - U
+    - S
+    - UI
+    - Id
+
+identifier_name:
+  min_length:
+    - 2 # error
+  max_length:
+    - 50 # error
+    
+implicitly_unwrapped_optional:
+  severity: error
+
+# Custom Rules
+custom_rules:
+  empty_init_body:
+    included: ".*.swift"
+    regex: 'init\([^\{\n]*\) \{\s+\}'
+    name: "Empty Init Body"
+    message: "Don't use whitespace or newlines for the body of empty initializers – use `init() {}` instead."
+    severity: warning
+  empty_method:
+    included: ".*.swift"
+    regex: 'func [^\s\(]+\([^\{\n]*\) \{\s*\}'
+    name: "Empty Method"
+    message: "Don't keep empty methods in code without commenting inside why they are needed or a `// TODO: not yet implemented`."
+    severity: warning
+  empty_type:
+    included: ".*.swift"
+    regex: '(?:class|protocol|struct|enum) [^\{]+\{\s*\}'
+    name: "Empty Type"
+    message: "Don't keep empty types in code without commenting inside why they are needed or a `// TODO: not yet implemented`."
+    severity: warning
+  if_as_guard:
+    included: ".*.swift"
+    regex: '(?<=\n) *if [^\{]+\{\s*return\s*(?:nil){0,1}([^a-zA-z\n]*)\n*\s*\}(?! *else)'
+    name: "If as Guard"
+    message: "Don't use an if statement to just return – use guard for such cases instead."
+    severity: warning
+  single_line_enum_cases:
+    included: ".*.swift"
+    regex: 'enum [^\{]+\{\s*(?:\s*\/\/[^\n]*)*\s*case\s+[^,(\n]+,'
+    name: "Single Line Enum Cases"
+    message: "Use a new line for each enum case."
+    severity: warning
+  single_line_guard:
+    included: ".*.swift"
+    regex: 'guard[^\{]{2,80}else\s*\{\s*\n\s*return.{2,40}\}'
+    name: "Single Line Guard"
+    message: "Use a single line guard for simple checks."
+    severity: warning
+  singleton_default_private_init:
+    included: ".*.swift"
+    regex: 'class +(?<TYPE>\w+)(?:<[^\>]+>)? *\{.*static let `default`(?:: *\k<TYPE>)? *= *\k<TYPE>\(.*(?<=private) init\('
+    name: "Singleton Default Private Init"
+    message: "Singletons with a `default` object (pseudo-singletons) should not declare init methods as private."
+    severity: warning
+  singleton_shared_final:
+    included: ".*.swift"
+    regex: '(?<!final )class +(?<TYPE>\w+)(?:<[^\>]+>)? *\{.*static let shared(?:: *\k<TYPE>)? *= *\k<TYPE>\('
+    name: "Singleton Shared Final"
+    message: "Singletons with a single object (`shared`) should be marked as final."
+    severity: warning
+  singleton_shared_private_init:
+    included: ".*.swift"
+    regex: 'class +(?<TYPE>\w+)(?:<[^\>]+>)? *\{.*static let shared(?:: *\k<TYPE>)? *= *\k<TYPE>\(.*(?<= |\t|public|internal) init\('
+    name: "Singleton Shared Private Init"
+    message: "Singletons with a single object (`shared`) should declare their init method(s) as private."
+    severity: warning
+  singleton_shared_single_object:
+    included: ".*.swift"
+    regex: 'class +(?<TYPE>\w+)(?:<[^\>]+>)? *\{.*(?:static let shared(?:: *\k<TYPE>)? *= *\k<TYPE>\(.*static let \w+(?:: *\k<TYPE>)? *= *\k<TYPE>\(|static let \w+(?:: *\k<TYPE>)? *= *\k<TYPE>\(.*static let shared(?:: *\k<TYPE>)? *= *\k<TYPE>\()'
+    name: "Singleton Shared Single Object"
+    message: "Singletons with a `shared` object (real Singletons) should not have other static let properties. Use `default` instead (if needed)."
+    severity: warning
+  swiftybeaver_logging:
+    included: ".*.swift"
+    regex: 'print\([^\n]+\)'
+    name: "Logger Logging"
+    message: "Don't use print – use Logger.verbose/debug/info/warning/error instead."
+    severity: warning
+  whitespace_comment_start:
+    included: ".*.swift"
+    regex: '[^:#\]\}\)][^:#\]\}\)]\/\/[^\s\/]'
+    name: "Whitespace Comment Start"
+    message: "A comment should always start with a whitespace."
+    severity: warning

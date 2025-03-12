@@ -1,0 +1,105 @@
+openapi: 3.0.0
+paths:
+  /api:
+    get:
+      operationId: AppController_getStatus
+      summary: Get Status
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiStatusDto'
+      tags:
+        - App
+  /api/auth/login:
+    post:
+      operationId: AuthController_login
+      summary: Login
+      parameters: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AuthLoginDto'
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AuthResponseDto'
+      tags:
+        - Auth
+info:
+  title: Api Documentation
+  description: ''
+  version: <<RELEASE>>
+  contact: {}
+tags: []
+servers: []
+components:
+  securitySchemes:
+    access-token:
+      scheme: Bearer
+      bearerFormat: Bearer
+      name: Authorization
+      type: http
+      in: Header
+  schemas:
+    ApiStatusDto:
+      type: object
+      properties:
+        uptime:
+          type: string
+          description: Api Status Uptime
+          example: 1d 12h 10m 30s
+        stage:
+          type: string
+          description: Api Status Stage
+          example: project-dev
+        version:
+          type: string
+          description: Api Status Version
+          example: project-dev-1.0.0
+        release:
+          type: string
+          description: Api Status Release (Git Hash Format)
+          example: 9eabf5b536662000f79978c4d1b6e4eff5c8d785
+        buildTime:
+          type: string
+          description: Api Status Build Time
+          example: '2022-01-01T10:00:00.000Z'
+      required:
+        - uptime
+        - stage
+        - version
+        - release
+        - buildTime
+    AuthLoginDto:
+      type: object
+      properties:
+        email:
+          type: string
+          description: Email
+        password:
+          type: string
+          description: Password
+      required:
+        - email
+        - password
+    AuthResponseDto:
+      type: object
+      properties:
+        accessToken:
+          type: string
+          description: Access Token
+        refreshToken:
+          type: string
+          description: Refresh Token
+      required:
+        - accessToken
+        - refreshToken

@@ -1,0 +1,15 @@
+# Povio Testflight UploadService
+# version 1.2.0
+
+default_platform(:ios)
+
+platform :ios do
+  private_lane :upload_build_testflight do |options|
+    groups = options.fetch(:groups)
+    upload_to_testflight(
+      skip_waiting_for_build_processing: true,
+      changelog: getChangeLog(ENV["ENVIRONMENT"]),
+      groups: groups
+    )
+  end
+end
