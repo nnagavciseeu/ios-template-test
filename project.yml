@@ -1,0 +1,147 @@
+name: template
+attributes:
+  ORGANIZATIONNAME: Povio Inc.
+
+############
+# Options
+############
+
+options:
+  minimumXcodeGenVersion: 2.42
+  groupSortPosition: top
+  generateEmptyDirectories: true
+  createIntermediateGroups: true
+  deploymentTarget: 
+    iOS: "16.0"
+
+############
+# Configs
+############
+
+configs:
+  Dev Debug: debug
+  Dev Release: release
+  Sta Debug: debug
+  Sta Release: release
+  QA Debug: debug
+  QA Release: release
+  Prod Debug: debug
+  Prod Release: release
+  AppStore Debug: debug
+  AppStore Release: release
+
+############
+# Packages
+############
+
+packages:
+  Networking:
+    path: Packages/Networking
+  Auth:
+    path: Packages/Auth
+  Utils:
+    path: Packages/Utils
+  PovioMacro:
+    path: Packages/PovioMacro
+  Domain:
+    path: Packages/Domain
+  OpenAPI:
+    path: Packages/OpenAPI
+
+############
+# Settings
+############
+
+targets:
+  template:
+    scheme:
+      configVariants:
+        - Dev
+        - Sta
+        - QA
+        - Prod
+        - AppStore
+      preActions:
+        - name: Setup Environment Variables
+          script: |
+            # Derive SRCROOT if it is empty
+            if [ -z "$SRCROOT" ]; then
+              if [ -n "$WORKSPACE_PATH" ]; then
+                SRCROOT=$(dirname "$WORKSPACE_PATH")
+                SRCROOT=$(dirname "$SRCROOT")
+                echo "Derived SRCROOT from WORKSPACE_PATH: $SRCROOT"
+              else
+                echo "Error: SRCROOT and WORKSPACE_PATH are both undefined."
+                exit 1
+              fi
+            fi
+
+            ${SRCROOT}/Scripts/env-variables.sh
+    type: application
+    platform: iOS
+    deploymentTarget: "16.0"
+    sources:
+      - path: template
+        excludes:
+          - Resources/Google/*.plist
+          - Resources/OpenAPI/*
+      - path: template
+        includes:
+          - Resources/Google/*.plist
+          - Resources/OpenAPI/*
+        buildPhase: none
+    dependencies:
+      - package: Networking
+      - package: Auth
+      - package: Utils
+      - package: PovioMacro
+      - package: Domain
+      - package: OpenAPI
+    buildPhase:
+      resources
+    postBuildScripts:
+      - path: ./BuildScripts/google-plist-sync.sh
+        name: Copy Google Info Plist
+        basedOnDependencyAnalysis: false
+      - path: ./BuildScripts/swiftlint.sh
+        name: Swift Lint
+        basedOnDependencyAnalysis: false
+      - path: ./BuildScripts/acknowledgements.sh
+        name: Acknowledgements
+        basedOnDependencyAnalysis: false
+    configFiles:
+      Dev Debug: template/Resources/Configs/Dev.xcconfig
+      Dev Release: template/Resources/Configs/Dev.xcconfig
+      Sta Debug: template/Resources/Configs/Staging.xcconfig
+      Sta Release: template/Resources/Configs/Staging.xcconfig
+      QA Debug: template/Resources/Configs/Dev.xcconfig
+      QA Release: template/Resources/Configs/Dev.xcconfig
+      Prod Debug: template/Resources/Configs/Prod.xcconfig
+      Prod Release: template/Resources/Configs/Prod.xcconfig
+      AppStore Debug: template/Resources/Configs/Prod.xcconfig
+      AppStore Release: template/Resources/Configs/Prod.xcconfig
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: $(BUNDLE_ID)$(BUNDLE_ID_SUFFIX)
+        BUNDLE_ID: "com.povio.nnagavci.template.cache"
+        TARGETED_DEVICE_FAMILY: 1
+        FIREBASE_CONFIG_FILE: "GoogleService-Info-Prod"
+      configs:
+        Dev:
+          BUNDLE_ID_SUFFIX: ".dev"
+          FIREBASE_CONFIG_FILE: "GoogleService-Info-Dev"
+        Sta:
+          BUNDLE_ID_SUFFIX: ".sta"
+          FIREBASE_CONFIG_FILE: "GoogleService-Info-Sta"
+        QA:
+          BUNDLE_ID_SUFFIX: ".sta"
+          FIREBASE_CONFIG_FILE: "GoogleService-Info-Sta"
+
+  templateTests:
+    type: bundle.unit-test
+    platform: iOS
+    deploymentTarget: "16.0"
+    sources:
+      - path: templateTests
+    dependencies:
+      - target: template

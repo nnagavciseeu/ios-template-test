@@ -1,0 +1,15 @@
+# Povio Firebase UploadService
+# version 1.1.0
+
+default_platform(:ios)
+
+platform :ios do
+  private_lane :upload_build_firebase do |options|
+    firebase_app_distribution(
+      app: ENV["FIREBASE_APP_ID"],
+      firebase_cli_token: ENV["FIREBASE_CLI_TOKEN"],
+      groups: ENV["GROUPS"],
+      release_notes: getChangeLog(ENV["ENVIRONMENT"])
+    )
+  end
+end

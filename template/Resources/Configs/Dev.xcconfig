@@ -1,0 +1,13 @@
+//
+//  Dev.xcconfig
+//  template
+//
+//  Created by Yll Fejziu on 21/11/2024.
+//  Copyright © 2024 Povio Inc. All rights reserved.
+//
+
+// Configuration settings file format documentation can be found at:
+// https://help.apple.com/xcode/#/dev745c5c974
+
+// Host
+HOST_BASE_URL = https:/$()/api.host.dev/api

@@ -1,0 +1,60 @@
+# Povio Slack NotifyService
+# version 1.4.0
+
+default_platform(:ios)
+
+platform :ios do
+  desc "Send a message with changelog after deployment"
+  lane :sendMessage do |options|
+    log = getChangeLog(ENV["ENVIRONMENT"])
+    tag_message = getTagMessage(ENV["GIT_TAG_NAME"])
+    tag_name = ENV["GIT_TAG_NAME"]
+    app_version = get_version_number(xcodeproj: "#{PROJECT_NAME}.xcodeproj", target: TARGET_NAME)
+    
+    # send to default (internal) channel
+    sendToSlack(tag_name, app_version, log, tag_message, ENV["SLACK_DEFAULT_CHANNEL"])
+
+    # send to client channel
+    sendToSlack(tag_name, app_version, log, tag_message, ENV["SLACK_CLIENT_CHANNEL"]) unless ENV["MSG_CLIENT_CH"] != "true"
+  end
+
+  def sendToSlack(tag_name, app_version, log, tag_message, channel)
+    # post slack message
+    version = app_version
+    if tag_name && !tag_name.empty? && tag_name != "unknown"
+      version += " (#{tag_name})"
+    end
+
+    access_token = ENV["SLACK_ACCESS_TOKEN"]
+    message = ENV["CIRCLE_JOB"] || ENV["GITHUB_WORKFLOW"]
+
+    message_thread = post_to_slack(
+      api_token: access_token,
+      channel: channel,
+      username: "Pipeline",
+      message: message,
+      success: true,
+      default_payloads: [],
+      payload: {
+        "App version": version
+      }
+    )
+
+    message_thread_ts = message_thread[:json]["ts"]
+    payload_fields = []
+    payload_fields << { title: "Message", value: tag_message } unless tag_message.empty?
+    payload_fields << { title: "Changelog", value: log }
+
+    # post release notes message in thread
+    post_to_slack(
+      api_token: access_token,
+      channel: channel,
+      thread_ts: message_thread_ts,
+      success: true,
+      default_payloads: [],
+      attachment_properties: {
+        fields: payload_fields
+      }
+    )
+  end
+end

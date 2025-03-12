@@ -1,0 +1,14 @@
+# Povio Testflight UploadService
+# version 1.0.0
+
+default_platform(:ios)
+
+platform :ios do
+  private_lane :sentry_upload_dsyms do |options|
+    sentry_upload_dif(
+      auth_token: ENV["SENTRY_TOKEN"],
+      org_slug: ENV["SENTRY_ORG"],
+      project_slug: ENV["SENTRY_PROJECT"]
+    )
+  end
+end
