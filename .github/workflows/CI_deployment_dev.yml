@@ -32,13 +32,19 @@ jobs:
           ruby-version: 3.1.2
           bundler-cache: true
 
-      - name: Cache SPM
-        uses: actions/cache@v4
+      - name: Checkout
+        uses: actions/checkout@v3
+      - name: Cache packages
+        uses: actions/cache@v3
+        id: packages-cache
         with:
-          path: .build
-          key: ${{ runner.os }}-spm-${{ hashFiles('**/Package.resolved') }}
+          path: |
+            packages_cache/artifacts
+            packages_cache/checkouts
+            packages_cache/workspace_state.json
+          key: ${{ runner.os }}-packages-${{ hashFiles('**/Package.resolved') }}
           restore-keys: |
-            ${{ runner.os }}-spm-
+            ${{ runner.os }}-packages-
 
       - name: Setup SSH Keys
         env:
@@ -50,18 +56,20 @@ jobs:
       - name: Get Tag Name
         uses: olegtarasov/get-tag@v2.1
 
-#      - name: Fastlane Deploy 
-#        env:
-#          SSH_AUTH_SOCK: /tmp/ssh_agent.sock
-#          APP_STORE_CONNECT_API_ISSUER_ID: '${{ secrets.APP_STORE_CONNECT_API_ISSUER_ID }}'
-#          APP_STORE_CONNECT_API_KEY_CONTENT: '${{ secrets.APP_STORE_CONNECT_API_KEY_CONTENT }}'
-#          APP_STORE_CONNECT_API_KEY_ID: '${{ secrets.APP_STORE_CONNECT_API_KEY_ID }}'
-#          MATCH_PASSWORD: ${{ secrets.MATCH_PASSWORD }}
-#          SLACK_CLIENT_CHANNEL: '${{ secrets.SLACK_CLIENT_CHANNEL }}'
-#          SLACK_DEFAULT_CHANNEL: '${{ secrets.SLACK_DEFAULT_CHANNEL }}'
-#          SENTRY_TOKEN: '${{ secrets.SENTRY_AUTH_TOKEN }}'
-#          FIREBASE_CLI_TOKEN: '${{ secrets.FIREBASE_CLI_TOKEN }}'
-#        run: bundle exec fastlane deploy_app --env ${{ env.ENVIRONMENT }}
+      - name: Fastlane Deploy 
+        env:
+          HAS_PACKAGES_CACHE_HIT: ${{ steps.packages-cache.outputs.cache-hit == 'true' }}
+          SSH_AUTH_SOCK: /tmp/ssh_agent.sock
+          APP_STORE_CONNECT_API_ISSUER_ID: '${{ secrets.APP_STORE_CONNECT_API_ISSUER_ID }}'
+          APP_STORE_CONNECT_API_KEY_CONTENT: '${{ secrets.APP_STORE_CONNECT_API_KEY_CONTENT }}'
+          APP_STORE_CONNECT_API_KEY_ID: '${{ secrets.APP_STORE_CONNECT_API_KEY_ID }}'
+          MATCH_PASSWORD: ${{ secrets.MATCH_PASSWORD }}
+          SLACK_CLIENT_CHANNEL: '${{ secrets.SLACK_CLIENT_CHANNEL }}'
+          SLACK_DEFAULT_CHANNEL: '${{ secrets.SLACK_DEFAULT_CHANNEL }}'
+          SENTRY_TOKEN: '${{ secrets.SENTRY_AUTH_TOKEN }}'
+          FIREBASE_CLI_TOKEN: '${{ secrets.FIREBASE_CLI_TOKEN }}'
+        run: bundle exec fastlane deploy_app --env ${{ env.ENVIRONMENT }}
+          
 
 #      - name: Slack Notify
 #        env:
