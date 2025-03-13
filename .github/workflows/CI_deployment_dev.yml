@@ -68,7 +68,9 @@ jobs:
           SLACK_DEFAULT_CHANNEL: '${{ secrets.SLACK_DEFAULT_CHANNEL }}'
           SENTRY_TOKEN: '${{ secrets.SENTRY_AUTH_TOKEN }}'
           FIREBASE_CLI_TOKEN: '${{ secrets.FIREBASE_CLI_TOKEN }}'
-        run: bundle exec fastlane deploy_app --env ${{ env.ENVIRONMENT }}
+        run: |
+          bundle install
+          bundle exec fastlane deploy_app --env ${{ env.ENVIRONMENT }}
           
 
 #      - name: Slack Notify
