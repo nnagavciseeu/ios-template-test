@@ -82,7 +82,7 @@ platform :ios do
 	disable_package_automatic_updates: true,
       	skip_package_dependencies_resolution: ENV["HAS_PACKAGES_CACHE_HIT"],
 	skip_codesigning: true,
-	export_xcarchive: true,
+	skip_package_ipa: true,
       )
     else
       build_app(
@@ -93,7 +93,7 @@ platform :ios do
 	disable_package_automatic_updates: true,
       	skip_package_dependencies_resolution: ENV["HAS_PACKAGES_CACHE_HIT"],
 	skip_codesigning: true,
-	export_xcarchive: true,
+	skip_package_ipa: true,
       )
     end
   end
