@@ -28,7 +28,7 @@ public struct OpenAPIClient: OpenAPIClientProtocol {
     }()
 
     client = Client(
-      serverURL: .init(string: Configuration.hostBaseUrl) ?? .defaultOpenAPIServerURL,
+      serverURL: .init(string: hostBaseUrl) ?? .defaultOpenAPIServerURL,
       transport: URLSessionTransport(configuration: .init(session: session)),
       middlewares: []
     )

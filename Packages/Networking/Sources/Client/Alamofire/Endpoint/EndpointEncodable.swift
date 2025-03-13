@@ -10,6 +10,8 @@ import Foundation
 import PovioKitNetworking
 import Utils
 
+public let hostBaseUrl = "https://api.host.prod/api"
+
 protocol EndpointEncodable: URLConvertible {
   typealias Path = String
   
@@ -19,7 +21,7 @@ protocol EndpointEncodable: URLConvertible {
 
 extension EndpointEncodable {
   var url: String {
-    "\(Configuration.hostBaseUrl)/mobile/\(Version.v1.rawValue)/\(path)"
+    "\(hostBaseUrl)/mobile/\(Version.v1.rawValue)/\(path)"
   }
   
   func asURL() throws -> URL {
