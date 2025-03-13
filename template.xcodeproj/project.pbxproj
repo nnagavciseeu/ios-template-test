@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 54;
+	objectVersion = 60;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -61,7 +61,7 @@
 /* Begin PBXFileReference section */
 		0517D127A71D2D2CA7CC896F /* UINavigationController+pushViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UINavigationController+pushViewController.swift"; sourceTree = "<group>"; };
 		05575650463F21059D721E5F /* UIWindow+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIWindow+Extensions.swift"; sourceTree = "<group>"; };
-		07854D8AD6EA2A1B283455B0 /* templateTests.xctest */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.cfbundle; path = templateTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		07854D8AD6EA2A1B283455B0 /* templateTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = templateTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		0881EC92834342F1F8A0EFC0 /* SplashView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashView.swift; sourceTree = "<group>"; };
 		097C9C87D55576660EC0A80F /* GoogleService-Info-Prod.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = "GoogleService-Info-Prod.plist"; sourceTree = "<group>"; };
 		0A5AD004B1BFA8010CC5D5FD /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -73,7 +73,7 @@
 		2F3CF69977FE825F177F67B8 /* AppError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppError.swift; sourceTree = "<group>"; };
 		31B06D3E50643CA0B9B51D6E /* FlowControllerStartupProcess.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlowControllerStartupProcess.swift; sourceTree = "<group>"; };
 		394D6563346D180057E6F520 /* Prod.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Prod.xcconfig; sourceTree = "<group>"; };
-		4124A7742A0BBC9A0C33D49F /* template.app */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.application; path = template.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		4124A7742A0BBC9A0C33D49F /* template.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = template.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		48EA02132E53D8411965DC74 /* OpenAPI */ = {isa = PBXFileReference; lastKnownFileType = folder; name = OpenAPI; path = Packages/OpenAPI; sourceTree = SOURCE_ROOT; };
 		5129BCFA1395E70D5A6CABED /* LoggerStartupProcess.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoggerStartupProcess.swift; sourceTree = "<group>"; };
 		5507CC8910F5E6B00AD8CD85 /* Routable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Routable.swift; sourceTree = "<group>"; };
@@ -81,17 +81,17 @@
 		5BAA8909E23CD8DE52977E41 /* PovioMacro */ = {isa = PBXFileReference; lastKnownFileType = folder; name = PovioMacro; path = Packages/PovioMacro; sourceTree = SOURCE_ROOT; };
 		5C69939A051B2484FB972EF2 /* SplashScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashScene.swift; sourceTree = "<group>"; };
 		60E3CF156CC65CF51FD96739 /* Networking */ = {isa = PBXFileReference; lastKnownFileType = folder; name = Networking; path = Packages/Networking; sourceTree = SOURCE_ROOT; };
-		63E26791FF1339E2C2C78A40 /* .gitkeep */ = {isa = PBXFileReference; path = .gitkeep; sourceTree = "<group>"; };
+		63E26791FF1339E2C2C78A40 /* .gitkeep */ = {isa = PBXFileReference; lastKnownFileType = text; path = .gitkeep; sourceTree = "<group>"; };
 		64AAC95889DF6DD7558D13C1 /* SentryStartupProcess.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SentryStartupProcess.swift; sourceTree = "<group>"; };
-		6865EE1DCB272E2F84D99F13 /* .gitkeep */ = {isa = PBXFileReference; path = .gitkeep; sourceTree = "<group>"; };
+		6865EE1DCB272E2F84D99F13 /* .gitkeep */ = {isa = PBXFileReference; lastKnownFileType = text; path = .gitkeep; sourceTree = "<group>"; };
 		6DE815152B9470A937AB68E2 /* Utils */ = {isa = PBXFileReference; lastKnownFileType = folder; name = Utils; path = Packages/Utils; sourceTree = SOURCE_ROOT; };
 		720A434DC84F63430C46A9F2 /* CustomHostingController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomHostingController.swift; sourceTree = "<group>"; };
 		72D78E389E7E389EEBB96114 /* DateFormatter+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DateFormatter+Ext.swift"; sourceTree = "<group>"; };
-		923C7830905E18FE1077D119 /* .gitkeep */ = {isa = PBXFileReference; path = .gitkeep; sourceTree = "<group>"; };
+		923C7830905E18FE1077D119 /* .gitkeep */ = {isa = PBXFileReference; lastKnownFileType = text; path = .gitkeep; sourceTree = "<group>"; };
 		96483B8CB7360F1ED94316C1 /* ModelError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModelError.swift; sourceTree = "<group>"; };
-		98726E341134B2FAD0E8E78A /* .gitkeep */ = {isa = PBXFileReference; path = .gitkeep; sourceTree = "<group>"; };
-		99400C825291738BF023392C /* PrivacyInfo.xcprivacy */ = {isa = PBXFileReference; path = PrivacyInfo.xcprivacy; sourceTree = "<group>"; };
-		9B6ADC099552867ADC98A18A /* .gitkeep */ = {isa = PBXFileReference; path = .gitkeep; sourceTree = "<group>"; };
+		98726E341134B2FAD0E8E78A /* .gitkeep */ = {isa = PBXFileReference; lastKnownFileType = text; path = .gitkeep; sourceTree = "<group>"; };
+		99400C825291738BF023392C /* PrivacyInfo.xcprivacy */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = PrivacyInfo.xcprivacy; sourceTree = "<group>"; };
+		9B6ADC099552867ADC98A18A /* .gitkeep */ = {isa = PBXFileReference; lastKnownFileType = text; path = .gitkeep; sourceTree = "<group>"; };
 		9F39F2DAD67F03E345688A11 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		A23DD25DE94A36C6AFB4419D /* BaseNavigationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseNavigationController.swift; sourceTree = "<group>"; };
 		A2D05057325C2BF705EF164E /* HostingNavigationConfigurable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HostingNavigationConfigurable.swift; sourceTree = "<group>"; };
@@ -101,15 +101,15 @@
 		B2D78ABBC2DE7C2E540F3767 /* FlowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlowController.swift; sourceTree = "<group>"; };
 		B4C07C98CCD0318FC832803C /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		BC201FC75F007564BFD7A919 /* BaseRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseRouter.swift; sourceTree = "<group>"; };
-		BDE231EB47CED5DEACFAF538 /* .gitkeep */ = {isa = PBXFileReference; path = .gitkeep; sourceTree = "<group>"; };
+		BDE231EB47CED5DEACFAF538 /* .gitkeep */ = {isa = PBXFileReference; lastKnownFileType = text; path = .gitkeep; sourceTree = "<group>"; };
 		C33243240BC5305523663BB6 /* DeepLinkHandling.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeepLinkHandling.swift; sourceTree = "<group>"; };
 		C6224026861CC1F160322C6F /* Aliases.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Aliases.swift; sourceTree = "<group>"; };
 		CBB7FCD1FD74DE1CD2FE9DD2 /* JSONDecoder+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "JSONDecoder+Ext.swift"; sourceTree = "<group>"; };
-		CBDFDBC863E2A99234E76A65 /* .gitkeep */ = {isa = PBXFileReference; path = .gitkeep; sourceTree = "<group>"; };
-		CC4E6BE3AC8DB69AC1E7BA72 /* .gitkeep */ = {isa = PBXFileReference; path = .gitkeep; sourceTree = "<group>"; };
-		CD4E27C1702205663ECC3DC9 /* .gitkeep */ = {isa = PBXFileReference; path = .gitkeep; sourceTree = "<group>"; };
-		D12A3C6A1627C77E03D10FDB /* .gitkeep */ = {isa = PBXFileReference; path = .gitkeep; sourceTree = "<group>"; };
-		D334705690E0F5EB21D2E3E3 /* .gitkeep */ = {isa = PBXFileReference; path = .gitkeep; sourceTree = "<group>"; };
+		CBDFDBC863E2A99234E76A65 /* .gitkeep */ = {isa = PBXFileReference; lastKnownFileType = text; path = .gitkeep; sourceTree = "<group>"; };
+		CC4E6BE3AC8DB69AC1E7BA72 /* .gitkeep */ = {isa = PBXFileReference; lastKnownFileType = text; path = .gitkeep; sourceTree = "<group>"; };
+		CD4E27C1702205663ECC3DC9 /* .gitkeep */ = {isa = PBXFileReference; lastKnownFileType = text; path = .gitkeep; sourceTree = "<group>"; };
+		D12A3C6A1627C77E03D10FDB /* .gitkeep */ = {isa = PBXFileReference; lastKnownFileType = text; path = .gitkeep; sourceTree = "<group>"; };
+		D334705690E0F5EB21D2E3E3 /* .gitkeep */ = {isa = PBXFileReference; lastKnownFileType = text; path = .gitkeep; sourceTree = "<group>"; };
 		D48535D3D5B46E307D35CE25 /* LaunchScreen.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = LaunchScreen.storyboard; sourceTree = "<group>"; };
 		D69031C93FCF8036F9704221 /* DefaultDeeplinkHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultDeeplinkHandler.swift; sourceTree = "<group>"; };
 		D6B362FEE9DAE55E48C74F1A /* Dev.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Dev.xcconfig; sourceTree = "<group>"; };
@@ -550,8 +550,6 @@
 				BuildIndependentTargetsInParallel = YES;
 				LastUpgradeCheck = 1430;
 				ORGANIZATIONNAME = "Povio Inc.";
-				TargetAttributes = {
-				};
 			};
 			buildConfigurationList = 2C3F8091300B4F7C16242CE7 /* Build configuration list for PBXProject "template" */;
 			compatibilityVersion = "Xcode 14.0";
@@ -712,6 +710,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
+				DEVELOPMENT_TEAM = 7G58AP3AJX;
 				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -794,6 +793,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				BUNDLE_ID = com.povio.nnagavci.template.cache;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
+				DEVELOPMENT_TEAM = 7G58AP3AJX;
 				FIREBASE_CONFIG_FILE = "GoogleService-Info-Prod";
 				INFOPLIST_FILE = template/Resources/Plists/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
@@ -927,6 +927,7 @@
 				BUNDLE_ID = com.povio.nnagavci.template.cache;
 				BUNDLE_ID_SUFFIX = .sta;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
+				DEVELOPMENT_TEAM = 7G58AP3AJX;
 				FIREBASE_CONFIG_FILE = "GoogleService-Info-Sta";
 				INFOPLIST_FILE = template/Resources/Plists/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
@@ -1011,6 +1012,7 @@
 				BUNDLE_ID = com.povio.nnagavci.template.cache;
 				BUNDLE_ID_SUFFIX = .dev;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
+				DEVELOPMENT_TEAM = 7G58AP3AJX;
 				FIREBASE_CONFIG_FILE = "GoogleService-Info-Dev";
 				INFOPLIST_FILE = template/Resources/Plists/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
@@ -1028,6 +1030,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
+				DEVELOPMENT_TEAM = 7G58AP3AJX;
 				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1044,6 +1047,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
+				DEVELOPMENT_TEAM = 7G58AP3AJX;
 				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1060,6 +1064,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
+				DEVELOPMENT_TEAM = 7G58AP3AJX;
 				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1076,6 +1081,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
+				DEVELOPMENT_TEAM = 7G58AP3AJX;
 				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1148,6 +1154,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
+				DEVELOPMENT_TEAM = 7G58AP3AJX;
 				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1168,6 +1175,7 @@
 				BUNDLE_ID = com.povio.nnagavci.template.cache;
 				BUNDLE_ID_SUFFIX = .dev;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
+				DEVELOPMENT_TEAM = 7G58AP3AJX;
 				FIREBASE_CONFIG_FILE = "GoogleService-Info-Dev";
 				INFOPLIST_FILE = template/Resources/Plists/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
@@ -1188,6 +1196,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				BUNDLE_ID = com.povio.nnagavci.template.cache;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
+				DEVELOPMENT_TEAM = 7G58AP3AJX;
 				FIREBASE_CONFIG_FILE = "GoogleService-Info-Prod";
 				INFOPLIST_FILE = template/Resources/Plists/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
@@ -1261,6 +1270,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
+				DEVELOPMENT_TEAM = 7G58AP3AJX;
 				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1280,6 +1290,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				BUNDLE_ID = com.povio.nnagavci.template.cache;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
+				DEVELOPMENT_TEAM = 7G58AP3AJX;
 				FIREBASE_CONFIG_FILE = "GoogleService-Info-Prod";
 				INFOPLIST_FILE = template/Resources/Plists/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
@@ -1364,6 +1375,7 @@
 				BUNDLE_ID = com.povio.nnagavci.template.cache;
 				BUNDLE_ID_SUFFIX = .sta;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
+				DEVELOPMENT_TEAM = 7G58AP3AJX;
 				FIREBASE_CONFIG_FILE = "GoogleService-Info-Sta";
 				INFOPLIST_FILE = template/Resources/Plists/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
@@ -1381,6 +1393,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
+				DEVELOPMENT_TEAM = 7G58AP3AJX;
 				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1401,6 +1414,7 @@
 				BUNDLE_ID = com.povio.nnagavci.template.cache;
 				BUNDLE_ID_SUFFIX = .sta;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
+				DEVELOPMENT_TEAM = 7G58AP3AJX;
 				FIREBASE_CONFIG_FILE = "GoogleService-Info-Sta";
 				INFOPLIST_FILE = template/Resources/Plists/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
@@ -1422,6 +1436,7 @@
 				BUNDLE_ID = com.povio.nnagavci.template.cache;
 				BUNDLE_ID_SUFFIX = .sta;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
+				DEVELOPMENT_TEAM = 7G58AP3AJX;
 				FIREBASE_CONFIG_FILE = "GoogleService-Info-Sta";
 				INFOPLIST_FILE = template/Resources/Plists/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
@@ -1442,6 +1457,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				BUNDLE_ID = com.povio.nnagavci.template.cache;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
+				DEVELOPMENT_TEAM = 7G58AP3AJX;
 				FIREBASE_CONFIG_FILE = "GoogleService-Info-Prod";
 				INFOPLIST_FILE = template/Resources/Plists/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
@@ -1578,6 +1594,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
+				DEVELOPMENT_TEAM = 7G58AP3AJX;
 				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1657,6 +1674,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
+				DEVELOPMENT_TEAM = 7G58AP3AJX;
 				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
